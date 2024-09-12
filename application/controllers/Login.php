@@ -41,8 +41,8 @@ class Login  extends CI_Controller
             $this->session->set_userdata('user', $u);
             $xcadmin = $cadmin->row_array();
 
-            if ($xcadmin['hak_akses'] == 'Admin') {
-                $this->session->set_userdata('akses', 'Admin');
+            if ($xcadmin['hak_akses'] == 'Staff') {
+                $this->session->set_userdata('akses', 'Staff');
                 $id = $xcadmin['id'];
                 $nama_lengkap = $xcadmin['nama_lengkap'];
                 $hak_akses = $xcadmin['hak_akses'];
@@ -58,8 +58,8 @@ class Login  extends CI_Controller
 
                 
                 redirect('Admin/Homepage', $data);
-            } elseif ($xcadmin['hak_akses'] == 'tu') {
-                $this->session->set_userdata('akses', 'tu');
+            } elseif ($xcadmin['hak_akses'] == 'Inspektor') {
+                $this->session->set_userdata('akses', 'Inspektor');
                 $id = $xcadmin['id'];
                 $nama_lengkap = $xcadmin['nama_lengkap'];
                 $hak_akses = $xcadmin['hak_akses'];
@@ -73,8 +73,8 @@ class Login  extends CI_Controller
                 );
 
                 redirect('Admin/Homepage', $data);
-            }elseif ($xcadmin['hak_akses'] == 'guru') {
-               $this->session->set_userdata('akses', 'Admin');
+            }elseif ($xcadmin['hak_akses'] == 'Manager') {
+               $this->session->set_userdata('akses', 'Manager');
                $id = $xcadmin['id'];
                $nama_lengkap = $xcadmin['nama_lengkap'];
                $hak_akses = $xcadmin['hak_akses'];
@@ -91,9 +91,18 @@ class Login  extends CI_Controller
            }
        } else {
 
-        $this->session->set_flashdata('msg', '<div class="alert alert-warning" role="alert" style="color:white">Username Atau Password Salah !</div>');
+        $this->session->set_flashdata('msg', '<div class="alert alert-warning" role="alert">Username Atau Password Salah !</div>');
         redirect('Login');
     }
+}
+
+public function logout()
+{
+               // Lakukan proses logout di sini
+    $this->session->sess_destroy();
+
+        // Redirect ke halaman setelah logout berhasil
+    redirect('Login');
 }
 
 }

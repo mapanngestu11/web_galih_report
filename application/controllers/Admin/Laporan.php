@@ -26,7 +26,7 @@ class Laporan  extends CI_Controller
 
     public function View()
     {
-        $data['laporan'] = $this->M_laporan->tampil_data();
+        $data['data_laporan'] = $this->M_laporan->tampil_data_join();
         $this->load->view('Admin/List.Laporan.php',$data);
     }
     public function Add()
@@ -124,5 +124,105 @@ class Laporan  extends CI_Controller
           redirect('Admin/Laporan/View');
       }
   }
+
+  public function delete()
+  {
+    $no_laporan = $this->input->post('no_laporan');
+    $this->M_laporan->delete_data($no_laporan);
+    echo $this->session->set_flashdata('msg', 'success_hapus');
+    redirect('Admin/Laporan/View');
+}
+public function update_status()
+{
+   $no_laporan = $this->input->post('no_laporan');
+   $nama_lengkap = $this->input->post('nama_lengkap');
+   $status = $this->input->post('status');
+   $keterangan = $this->input->post('keterangan');
+
+   $data = array(
+       'no_laporan' => $no_laporan,
+       'nama_lengkap' => $nama_lengkap,
+       'status' => $status,
+       'keterangan' => $keterangan
+   );
+
+   $where = array(
+    'no_laporan' => $no_laporan
+);
+
+   $this->M_laporan->update_status_data($where,$data, 'tabel_status_laporan');
+   echo $this->session->set_flashdata('msg', 'info-update');
+   redirect('Admin/Laporan/View');
+}
+
+public function view_cetak(){
+    $data['data_laporan'] = $this->M_laporan->tampil_data_join();
+    $this->load->view('Admin/List.Laporan.cetak.php',$data);
+}
+
+public function cetak_laporan_bulan()
+{
+    $tgl_awal = $this->input->post('tgl_awal');
+    $tgl_akhir = $this->input->post('tgl_akhir');
+
+    $data_laporan = $this->M_laporan->get_data_by_range($tgl_awal, $tgl_akhir);
+
+    $data_laporan_by_date = [];
+    foreach ($data_laporan as $data_cek) {
+
+        $data_laporan_by_date[$data_cek['tanggal']] = [
+            'status' => 'Ada', 
+            'no_laporan' => $data_cek['no_laporan'],
+            'nama_lengkap' => $data_cek['nama_lengkap'],
+            'waktu' => $data_cek['waktu'],
+            'line' => $data_cek['line'],
+            'mesin' => $data_cek['mesin'],
+            'status_kerja' => $data_cek['status_kerja'],
+            'keterangan' => $data_cek['keterangan']
+        ];
+    }
+
+    $hasil_laporan = [];
+    $current_date = strtotime($tgl_awal);
+    $end_date = strtotime($tgl_akhir);
+    while ($current_date <= $end_date) {
+        $current_date_str = date('Y-m-d', $current_date);
+        if (isset($data_laporan_by_date[$current_date_str])) {
+
+            $hasil_laporan[] = [
+                'tanggal' => $current_date_str,
+                'status' => $data_laporan_by_date[$current_date_str]['status'],
+                'no_laporan' =>  $data_laporan_by_date[$current_date_str]['no_laporan'],
+                'nama_lengkap' =>  $data_laporan_by_date[$current_date_str]['nama_lengkap'],
+                'waktu' =>  $data_laporan_by_date[$current_date_str]['waktu'],
+                'line' =>  $data_laporan_by_date[$current_date_str]['line'],
+                'mesin' =>  $data_laporan_by_date[$current_date_str]['mesin'],
+                'status_kerja' =>  $data_laporan_by_date[$current_date_str]['status_kerja'],
+                'keterangan' =>  $data_laporan_by_date[$current_date_str]['keterangan']
+            ];
+        } else {
+                // Jika tidak ada data, tambahkan keterangan "Kosong"
+           $hasil_laporan[] = [
+            'tanggal' => $current_date_str,
+            'status' => 'Kosong',
+            'no_laporan' => '',
+            'nama_lengkap' => '',
+            'waktu' => '',
+            'line' => '',
+            'mesin' => '',
+            'status_kerja' => '',
+            'keterangan' => 'Tidak ada data'
+        ];
+    }
+
+            // Lanjutkan ke tanggal berikutnya
+    $current_date = strtotime('+1 day', $current_date);
+}
+$data['hasil_laporan'] = $hasil_laporan;
+
+$this->load->view('Admin/Cetak_laporan.php',$data);
+}
+
+
 }
 

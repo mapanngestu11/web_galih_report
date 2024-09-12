@@ -24,9 +24,9 @@ var optionsProfileVisit = {
 	},
 }
 let optionsVisitorsProfile  = {
-	series: [70, 30],
-	labels: ['Male', 'Female'],
-	colors: ['#435ebe','#55c6e8'],
+	series: [70, 30, 20],
+	labels: ['Pending', 'Solve', 'Unfixed'],
+	colors: ['#dfe01d','#23fa4f', '#d02525'],
 	chart: {
 		type: 'donut',
 		width: '100%',

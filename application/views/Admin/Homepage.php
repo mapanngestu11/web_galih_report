@@ -37,7 +37,7 @@
             </header>
 
             <div class="page-heading">
-                <h3>PT. United Can - Tangerang</h3>
+                <h3>PT. United Can</h3>
             </div>
             <div class="page-content">
                 <section class="row">
@@ -54,7 +54,7 @@
                                             </div>
                                             <div class="col-md-8">
                                                 <h6 class="text-muted font-semibold">Laporan ACC</h6>
-                                                <h6 class="font-extrabold mb-0">112.000</h6>
+                                                <h6 class="font-extrabold mb-0"> <?php echo $solve[0]->jumlah ;?> </h6>
                                             </div>
                                         </div>
                                     </div>
@@ -71,7 +71,7 @@
                                             </div>
                                             <div class="col-md-8">
                                                 <h6 class="text-muted font-semibold">Laporan Belum Dicek</h6>
-                                                <h6 class="font-extrabold mb-0">183.000</h6>
+                                                <h6 class="font-extrabold mb-0"><?php echo $pending[0]->jumlah ;?></h6>
                                             </div>
                                         </div>
                                     </div>
@@ -88,7 +88,7 @@
                                             </div>
                                             <div class="col-md-8">
                                                 <h6 class="text-muted font-semibold">Total Laporan</h6>
-                                                <h6 class="font-extrabold mb-0">80.000</h6>
+                                                <h6 class="font-extrabold mb-0"> <?php echo $total[0]->jumlah ;?> </h6>
                                             </div>
                                         </div>
                                     </div>
@@ -100,74 +100,12 @@
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="stats-icon green">
-                                                    <i class="iconly-boldAdd-User"></i>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <h6 class="text-muted font-semibold">Total User</h6>
-                                                <h6 class="font-extrabold mb-0">112</h6>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-
-                            <div class="col-12 col-xl-12">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h4>Data Perubahan Issue (Laporan) Terbaru</h4>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="table-responsive">
-                                            <table class="table table-hover table-lg">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Nama</th>
-                                                        <th>Status</th>
-                                                        <th>Keterangan</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="col-3">
-                                                            <div class="d-flex align-items-center">
-                                                                <div class="avatar avatar-md">
-                                                                    <img src="assets/images/faces/5.jpg">
-                                                                </div>
-                                                                <p class="font-bold ms-3 mb-0">Si Cantik</p>
-                                                            </div>
-                                                        </td>
-                                                        <td class="col-auto">
-                                                            <p class=" mb-0">Congratulations on your graduation!</p>
-                                                        </td>
-                                                        <td class="col-auto">
-                                                            <p class=" mb-0">Congratulations on your graduation!</p>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td class="col-3">
-                                                            <div class="d-flex align-items-center">
-                                                                <div class="avatar avatar-md">
-                                                                    <img src="assets/images/faces/2.jpg">
-                                                                </div>
-                                                                <p class="font-bold ms-3 mb-0">Si Ganteng</p>
-                                                            </div>
-                                                        </td>
-                                                        <td class="col-auto">
-                                                            <p class=" mb-0">Wow amazing design! Can you make another
-                                                                tutorial for
-                                                            this design?</p>
-                                                        </td>
-                                                        <td class="col-auto">
-                                                            <p class=" mb-0">Congratulations on your graduation!</p>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                                 <i class="iconly-boldProfile"></i>
+                                             </div>
+                                         </div>
+                                         <div class="col-md-8">
+                                            <h6 class="text-muted font-semibold">Total User</h6>
+                                            <h6 class="font-extrabold mb-0"><?php echo $user[0]->jumlah ;?></h6>
                                         </div>
                                     </div>
                                 </div>
@@ -175,10 +113,97 @@
                         </div>
                     </div>
 
-                </section>
+                    <div class="row">
+
+                        <div class="col-12 col-xl-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4>Data Perubahan Issue (Laporan) Terbaru</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-lg">
+                                            <thead>
+                                                <tr>
+                                                    <th>Nama</th>
+                                                    <th>Status</th>
+                                                    <th>Keterangan</th>
+                                                    <th>Tanggal</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                function format_tanggal_indo($tanggal) {
+                                                    $bulan = [
+                                                        1 => 'Januari',
+                                                        'Februari',
+                                                        'Maret',
+                                                        'April',
+                                                        'Mei',
+                                                        'Juni',
+                                                        'Juli',
+                                                        'Agustus',
+                                                        'September',
+                                                        'Oktober',
+                                                        'November',
+                                                        'Desember'
+                                                    ];
+                                                    $tanggal_split = explode('-', $tanggal);
+                                                    return $tanggal_split[2] . ' ' . $bulan[(int)$tanggal_split[1]] . ' ' . $tanggal_split[0];
+                                                }
+                                                ?>
+                                                <tr>
+                                                  <?php
+                                                  $no = 0;
+                                                  foreach ($laporan->result_array() as $row) :
+
+                                                    $no++;
+                                                    $nama_lengkap               = $row['pembuat'];
+                                                    $status = $row['status_kerja'];
+                                                    $keterangan = $row['keterangan'];
+                                                    $waktu_post = $row['tanggal'];
+                                                    ?>
+
+                                                    <td class="col-auto">
+                                                        <p class=" mb-0"><?php echo $nama_lengkap;?></p>
+                                                    </td>
+                                                    <td class="col-auto">
+                                                        <p class=" mb-0"><?php echo $status;?></p>
+                                                    </td>
+                                                    <td class="col-auto">
+                                                        <p class=" mb-0"><?php echo $keterangan;?></p>
+                                                    </td>
+                                                    <td class="col-auto">
+                                                        <p class=" mb-0"><?php echo format_tanggal_indo($waktu_post);?></p>
+                                                    </td>
+
+                                                <?php endforeach;?>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Informasi Laporan Issue</h4>
+                        </div>
+                        <div class="card-body">
+                            <div id="chart-visitors-profile"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
+        </section>
+    </div>
 
-        </body>
-        <?php include 'Page/Footer.php';?>
-        </html>
+
+</body>
+<?php include 'Page/Footer.php';?>
+
+</html>

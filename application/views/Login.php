@@ -45,6 +45,7 @@
 						<img src="<?php echo base_url() . "assets/login/images/logo.png"; ?>" alt="Logo" class="logo_header">				
 						<!-- text -->
 					</span>
+					<p><?php echo $this->session->flashdata('msg'); ?></p>
 					<div class="wrap-input100 validate-input m-b-16" data-validate="Please enter username">
 						<input class="input100" type="text" name="username" placeholder="Username">
 						<span class="focus-input100"></span>

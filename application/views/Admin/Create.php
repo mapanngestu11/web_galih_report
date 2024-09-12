@@ -103,11 +103,16 @@ echo $finalString;
                                         </div>
                                         <div class="col-md-3">
                                             <label>Tanggal</label>
-                                            <input type="date" name="tanggal" class="form-control" required="">
+                                            <?php $tanggal_saat_ini = date('Y-m-d');?>
+                                            <input type="text" name="tanggal" class="form-control" value="<?php echo $tanggal_saat_ini;?>" readonly>
                                         </div>
                                         <div class="col-md-3">
                                             <label>Waktu </label>
-                                            <input type="time" name="waktu" class="form-control" required="">
+                                            <?php
+                                            date_default_timezone_set('Asia/Jakarta');
+                                            $waktu_sekarang = date('H:i:s');
+                                            ?>
+                                            <input type="text" name="waktu" class="form-control" required="" value="<?php echo $waktu_sekarang;?> WIB" readonly>
                                         </div>
                                     </div>
                                     <div class="row form-group">
